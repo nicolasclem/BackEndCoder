@@ -9,13 +9,13 @@ class User{
     }
 
     getFullName() {
-        const fullNAme=`${this.name} ${this.surname}`
-        console.log( `nombre completo  : ${fullNAme}`);
+        const fullName=`${this.name} ${this.surname}`
+        console.log( `nombre completo  : ${fullName}`);
     }
 
     addMascota(mascota){
         this.pets.push(mascota);
-        console.log("se agreggo una mascota!!!");
+        console.log("se agrego una mascota!!!");
         console.log(this.pets);
     }
 
