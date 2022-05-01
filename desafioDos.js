@@ -49,18 +49,12 @@ productExample={
 }
 
 
-const pokemones=[]
+
 const prueba = new contenedor("prueba1")
 
 prueba.save(productExample)
 
-prueba.save(productExample)
 
-prueba.save(productExample)
-prueba.save(productExample)
-prueba.save(productExample)
-prueba.save(productExample)
-prueba.save(productExample)
 
 
 
