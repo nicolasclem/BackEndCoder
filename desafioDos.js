@@ -23,22 +23,41 @@ class contenedor {
 
             try {
                 await fs.promises.writeFile(`./${this.FileName}.txt`, JSON.stringify(this.products, null, '\t'))
+                console.log(`archivo creado : ${ this.FileName}  \n producto creado con id : ${product.id} \n name : ${product.title}`);
             } catch (error) {
                 console.log(error);
             }
         } else {
             const allProducts = await this.getAlldev()
-            const indexID = allProducts[allProducts.length - 1].id
-            product = {
-                ...product,
-                id: indexID + 1
-            }
-            allProducts.push(product)
+            if (allProducts) {
+                const indexID = allProducts[allProducts.length - 1].id
+                product = {
+                    ...product,
+                    id: indexID + 1
+                }
+                allProducts.push(product)
 
-            try {
-                await fs.promises.writeFile(`./${this.FileName}.txt`, JSON.stringify(allProducts, null, '\t'))
-            } catch (error) {
-                console.log(error);
+                try {
+                    await fs.promises.writeFile(`./${this.FileName}.txt`, JSON.stringify(allProducts, null, '\t'))
+                    console.log(`producto creado con id : ${product.id} name : ${product.title}`);
+                } catch (error) {
+                    console.log(error);
+                }
+            } else {
+                product = {
+                    ...product,
+                    id: 1
+                }
+
+                this.products.push(product)
+
+                try {
+                    await fs.promises.writeFile(`./${this.FileName}.txt`, JSON.stringify(this.products, null, '\t'))
+                    console.log(`producto creado con id : ${product.id} \n name : ${product.title}`);
+                } catch (error) {
+                    console.log(error);
+                }
+
             }
         }
     }
@@ -50,7 +69,10 @@ class contenedor {
         if (exists) {
             const products = await this.getAlldev()
             const productsById = products.filter(X => X.id == id)
-            console.log(productsById);
+            if (productsById.length != 0) {
+                console.log(` le producto seleccionado es: `);
+                console.log(productsById);
+            } else console.log("no encontramos el producto seleccionado")
         } else console.log(`No  existe el archivo : ./${this.FileName}.txt`);
 
 
@@ -62,6 +84,7 @@ class contenedor {
             try {
                 const products = await fs.promises.readFile(`./${this.FileName}.txt`, "utf-8")
                 const allProducts = JSON.parse(products);
+                console.log(`Todos nuestros productos: `);
                 console.log(allProducts);
                 return allProducts
             } catch (error) {
@@ -91,6 +114,7 @@ class contenedor {
             if (borrar) {
                 const productsById = products.filter(X => X.id != id)
                 await fs.promises.writeFile(`./${this.FileName}.txt`, JSON.stringify(productsById, null, '\t'))
+                console.log(` producto borrado id : ${id}`);
             } else console.log(`no se encuentra el producto con id : ${id}`);
         } else console.log(`No  existe el archivo : ./${this.FileName}.txt`);
     }
@@ -102,28 +126,78 @@ class contenedor {
         if (exists) {
             try {
                 await fs.promises.writeFile(`./${this.FileName}.txt`, '')
+                console.log(` todos los productos fueron borrados`);
+
             } catch (error) {
                 console.log(error);
             }
         } else console.log(`No  existe el archivo : ./${this.FileName}.txt`);
     }
 
+    deleteFile = async () => {
+        const exists = fs.existsSync(`./${this.FileName}.txt`)
+        if (exists) {
+            await fs.promises.unlink(`./${this.FileName}.txt`)
+            console.log(`archivo eliminado : ${this.FileName}`);
+        }
+    }
 
 }
+async function main() {
+    console.log("*************Save***************");
+    await prueba.save(productExample1)
+    console.log("*******************************\n\n");
+    console.log("*******************************\n\n");
+    console.log("*************Save***************");
+    await prueba.save(productExample2)
+    await prueba.save(productExample3)
+    console.log("*******************************\n\n");
+
+    console.log("================= GET ALL=======");
+    await prueba.getAll()
+    console.log("*******************************\n\n");
+    console.log("===============================");
+    console.log("++++++++++GET BY ID++++++++++++");
+    await prueba.getById(3)
+    console.log("*******************************\n\n");
+    console.log("++++++++++GET BY ID++++++++++++");
+    await prueba.getById(99)
+    console.log("*******************************\n\n");
+
+    console.log("************DELETE BY ID*******");
+    await prueba.deleteById(2)
+    console.log("*******************************\n\n");
+    console.log("************DELETE BY ID*******");
+    await prueba.deleteById(99)
+    console.log("*******************************\n\n");
+
+
+    console.log("********BORRAMOS TODO**********");
+    // para borrar  todos los datos y dejar el archivo  vacio ejecutar el siguiente metodo  
+    // await prueba.deleteAll()
+
+
+    console.log("********BORRAMOS Archivo**********");
+    // para borrar   el archivo ejecutar el siguiente metodo  
+    // await prueba.deleteFile()
+
+
+}
+
 productExample1 = {
-    title: "prueba1",
+    title: "Producto UNO",
     price: 1,
     thumbnail: "https://source.unsplash.com/random"
 }
 
 productExample2 = {
-    title: "prueba2",
+    title: "Producto DOS",
     price: 2,
     thumbnail: "https://source.unsplash.com/random"
 }
 
 productExample3 = {
-    title: "prueba3",
+    title: "Producto TRES",
     price: 3,
     thumbnail: "https://source.unsplash.com/random"
 }
@@ -134,16 +208,5 @@ productExample3 = {
 const prueba = new contenedor("productos")
 
 
-// prueba.save(productExample1)
-// prueba.save(productExample2)
-// prueba.save(productExample3)
 
-//prueba.getAll()
-
-
-//prueba.getById(4)
-
-//prueba.deleteById(7)
-
-
-//prueba.deleteAll()
+main()
