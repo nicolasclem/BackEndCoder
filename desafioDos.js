@@ -5,9 +5,6 @@ class contenedor {
     constructor(FileName) {
         this.FileName = FileName;
         this.products = []
-
-
-
     }
     save = async (product) => {
 
@@ -40,6 +37,9 @@ class contenedor {
                 try {
                     await fs.promises.writeFile(`./${this.FileName}.txt`, JSON.stringify(allProducts, null, '\t'))
                     console.log(`producto creado con id : ${product.id} name : ${product.title}`);
+
+                    return product.id 
+
                 } catch (error) {
                     console.log(error);
                 }
@@ -54,6 +54,8 @@ class contenedor {
                 try {
                     await fs.promises.writeFile(`./${this.FileName}.txt`, JSON.stringify(this.products, null, '\t'))
                     console.log(`producto creado con id : ${product.id} \n name : ${product.title}`);
+
+                    return product.id 
                 } catch (error) {
                     console.log(error);
                 }
@@ -68,10 +70,11 @@ class contenedor {
         const exists = fs.existsSync(`./${this.FileName}.txt`)
         if (exists) {
             const products = await this.getAlldev()
-            const productsById = products.filter(X => X.id == id)
-            if (productsById.length != 0) {
+            const foundProduct = products.find(elem => elem.id == id)
+            if (foundProduct != undefined) {
                 console.log(` le producto seleccionado es: `);
-                console.log(productsById);
+                console.log(foundProduct);
+                return(foundProduct)
             } else console.log("no encontramos el producto seleccionado")
         } else console.log(`No  existe el archivo : ./${this.FileName}.txt`);
 
@@ -110,9 +113,8 @@ class contenedor {
         const exists = fs.existsSync(`./${this.FileName}.txt`)
         if (exists) {
             const products = await this.getAlldev()
-            const borrar = products.find(elem => elem.id == id)
-            if (borrar) {
-                const productsById = products.filter(X => X.id != id)
+            const productsById = products.filter(X => X.id != id)
+            if (productsById.length > 0) {
                 await fs.promises.writeFile(`./${this.FileName}.txt`, JSON.stringify(productsById, null, '\t'))
                 console.log(` producto borrado id : ${id}`);
             } else console.log(`no se encuentra el producto con id : ${id}`);
@@ -158,7 +160,7 @@ async function main() {
     console.log("*******************************\n\n");
     console.log("===============================");
     console.log("++++++++++GET BY ID++++++++++++");
-    await prueba.getById(3)
+    await prueba.getById(2)
     console.log("*******************************\n\n");
     console.log("++++++++++GET BY ID++++++++++++");
     await prueba.getById(99)
@@ -210,3 +212,4 @@ const prueba = new contenedor("productos")
 
 
 main()
+//prueba.deleteFile()
