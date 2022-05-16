@@ -1,3 +1,26 @@
 [
-
+	{
+		"id": 2,
+		"name": "nico",
+		"price": "10",
+		"thumbnail": "image 1652648364441 .png"
+	},
+	{
+		"id": 3,
+		"name": "bauti",
+		"price": "10",
+		"thumbnail": "image-1652669795873.png"
+	},
+	{
+		"id": 4,
+		"name": "nicolas",
+		"price": "2020",
+		"thumbnail": "image-1652667804749.png"
+	},
+	{
+		"id": 5,
+		"name": "bautista",
+		"price": "89",
+		"thumbnail": "image-1652669817202.png"
+	}
 ]

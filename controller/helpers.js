@@ -4,14 +4,14 @@ const fs = require('fs');
 const helpers = {
     
     // requerir base de datos desde fs
-    readJson: function (archivoJson){ 
-    let productsFilePath = fs.readFileSync(path.resolve(__dirname, `${archivoJson}`));
+    readJson:  async (archivoJson)=>{ 
+    let productsFilePath = await fs.promises.readFile(`./${archivoJson}.json`, "utf-8")
         return JSON.parse(productsFilePath);
     },
 
-    writeJson:(archivoJson,productsFilePath)=>{
+    writeJson: async (archivoJson,products)=>{
         
-		fs.writeFileSync(path.resolve(__dirname,`../data/${archivoJson}`),  JSON.stringify(productsFilePath, null, 4));
+        await fs.promises.writeFile(`./${archivoJson}.json`, JSON.stringify(products, null, '\t'))
     },
 
     lastId:  (archivoJson) => {
