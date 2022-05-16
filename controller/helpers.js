@@ -3,7 +3,6 @@ const fs = require('fs');
 
 const helpers = {
     
-    // requerir base de datos desde fs
     readJson:  async (archivoJson)=>{ 
     let productsFilePath = await fs.promises.readFile(`./${archivoJson}.json`, "utf-8")
         return JSON.parse(productsFilePath);

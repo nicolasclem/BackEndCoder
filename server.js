@@ -5,6 +5,7 @@ const PORT = 8080;
 
 
 const routersProducts = require('./routes/ProductRoute')
+const routersMain = require('./routes/MainRoute')
 
 
 express.static(path.resolve(__dirname, './public'))
@@ -13,9 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 
-app.get('/',(req,res)=>{
-    res.sendFile(path.resolve(__dirname, './public/index.html'))
-})
+app.use('/',routersMain)
 
 
 app.use('/api/productos',routersProducts)
