@@ -1,0 +1,28 @@
+doctype html
+
+head
+  title Pug
+h1 Pug - node template engine
+
+
+
+if (productos.length===0)
+    p No Tenemos productos
+else
+    table.table
+        thead
+            tr
+            th(scope='col') nombre
+            th(scope='col') precio
+            th(scope='col') imagen
+        tbody
+            each x in productos
+                tr
+                    td #{x.name}
+                    td #{x.price}            
+                    td 
+                        - var url = x.imgURL;
+                        img(src= url)
+
+a( href='//localhost:8080') 
+    input(type="button"  class="btn btn-outline-secondary" value="Crear Producto")

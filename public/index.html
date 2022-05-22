@@ -39,13 +39,39 @@
   <div class="d-flex justify-content-center">
     <form>
       <a href="http://localhost:8080/productos">
-          <input type="button" class="btn btn-outline-secondary" value="Productos">
+          <input type="button" class="btn btn-outline-secondary" id="btnHbs"value="Productos hbs" >
       </a>
-  </form> 
+      <!-- <a href="http://localhost:8080/productos">
+        <input type="button" class="btn btn-outline-secondary" id="btnEjs" value="Productos ejs" >
+    </a>
+    <a href="http://localhost:8080/productos">
+      <input type="button" class="btn btn-outline-secondary" id="btnPug"value="Productos pug" > 
+    </a>-->
+    </form>  
 
+    <form  action="/test">
+        <div class="form-check">
+        <input class="form-check-input" type="radio" name="ejs" id="checkEjs">
+        <label class="form-check-label" for="checkEjs">
+          Ejs
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="hbs" id="checkHbs">
+        <label class="form-check-label" for="checkHbs">
+          Hbs
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="pug" id="checkPug">
+        <label class="form-check-label" for="checkPug">
+          pug
+        </label>
+      </div>
+      <button type="submit" class="btn btn-outline-info" >Ir a Productos</button>
+    </form>
   
   </div>
 
-  
 
 </html>
