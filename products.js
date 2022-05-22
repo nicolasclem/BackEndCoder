@@ -60,7 +60,7 @@ class ProductsController {
             id: lastId(allProducts) + 1,
             name: req.body.name,
             price: req.body.price,
-            thumbnail: req.file.filename,
+           // thumbnail: req.file.filename,
             imgURL:req.body.imgURL
         }
         try {
@@ -94,7 +94,7 @@ class ProductsController {
                     ...foundProduct,                 
                     name: req.body.name != undefined ? req.body.name : foundProduct.name,
                     price: req.body.price != undefined ? req.body.price : foundProduct.price,
-                    thumbnail: req.file != undefined? req.file.filename :foundProduct.thumbnail,
+                   // thumbnail: req.file != undefined? req.file.filename :foundProduct.thumbnail,
                     imgUrl:req.body.imgUrl != undefined ? req.body.imgUrl : foundProduct.imgUrl,
                     
                 }

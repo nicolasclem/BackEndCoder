@@ -26,10 +26,10 @@
       <input type="text" class="form-control" placeholder="Precio" name="price" id="price" aria-label="Amount (to the nearest dollar)">
       <span class="input-group-text">.00</span>
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="image" class="form-label">Subir Archivo</label>
       <input class="form-control form-control-sm" name="image" id="image" type="file" accept="image/.jpg, image/.png">
-    </div>
+    </div> -->
     <div class="mb-3">
       
       <input type="text" class="form-control" id="imgURL" name="imgURL" placeholder="img x URL" aria-describedby="emailHelp">
@@ -37,12 +37,15 @@
     <button type="submit" class="btn btn-primary">Crear Producto</button>
   </form>
   <div class="d-flex justify-content-center">
-  
+    <form>
+      <a href="http://localhost:8080/productos">
+          <input type="button" class="btn btn-outline-secondary" value="Productos">
+      </a>
+  </form> 
 
-  <button type="button" class="btn btn-outline-secondary">Todos Los Productos</button>
+  
   </div>
 
-  <img src="./img/image-1653164537655.png.png"alt="...">
-</body>
+  
 
 </html>
