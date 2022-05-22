@@ -1,0 +1,41 @@
+<html>
+<head>  
+    HBS
+</head>
+
+
+<h1 class="display-6 text-center">Todos lo Productos</h1>
+<div>
+{{#if productos.length}}
+   
+<table class="table w-50 m-auto">
+  <thead>
+    <tr>
+      
+      <th scope="col">Nombre</th>
+      <th scope="col">Precio</th>
+      <th scope="col">imagen</th>
+    </tr>
+  </thead>
+   <tbody>
+     {{#each productos }}
+        <tr>
+            <td>{{name}}</td>
+            <td>$ {{price}}</td>
+            <td>
+                
+                <img src={{imgURL}} alt="...">
+            </td>
+        </tr>
+    {{/each}}
+</tbody>
+</table>
+{{else}}
+
+ <p class="display-6 text-center">No se encuentran productos</p>
+ {{/if}}
+
+</div>
+
+</html>
+
