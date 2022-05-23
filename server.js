@@ -11,7 +11,8 @@ const routersProducts = require('./routes/ProductRoute')
 const routersMain = require('./routes/MainRoute');
 const {readJson} = require('./controller/helpers');
 
-let plantilla="pug"
+const plantilla= 'pug'
+
 
 express.static(path.resolve(__dirname, './public'))
 
@@ -57,6 +58,7 @@ switch (plantilla) {
         app.set('views','./views')
 
         app.get('/productos',async (req,res)=>{
+        
         const productos=    await readJson('db')    
         res.render('main',{productos})
         })
@@ -70,7 +72,6 @@ switch (plantilla) {
 
 
 app.use('/',routersMain)
-
 
 
 

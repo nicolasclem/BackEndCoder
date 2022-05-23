@@ -18,7 +18,7 @@
   <form action="api/productos" method="POST" enctype="multipart/form-data" class=" container mx-auto my-4 w-25">
     <div class="mb-3">
       
-      <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" aria-describedby="emailHelp">
+      <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" aria-describedby="emailHelp" >
     </div>
 
     <div class="input-group mb-3">
@@ -26,52 +26,18 @@
       <input type="text" class="form-control" placeholder="Precio" name="price" id="price" aria-label="Amount (to the nearest dollar)">
       <span class="input-group-text">.00</span>
     </div>
-    <!-- <div class="mb-3">
-      <label for="image" class="form-label">Subir Archivo</label>
-      <input class="form-control form-control-sm" name="image" id="image" type="file" accept="image/.jpg, image/.png">
-    </div> -->
     <div class="mb-3">
       
       <input type="text" class="form-control" id="imgURL" name="imgURL" placeholder="img x URL" aria-describedby="emailHelp">
     </div>
     <button type="submit" class="btn btn-primary">Crear Producto</button>
   </form>
-  <div class="d-flex justify-content-center">
-    <form>
-      <a href="http://localhost:8080/productos">
-          <input type="button" class="btn btn-outline-secondary" id="btnHbs"value="Productos hbs" >
-      </a>
-      <!-- <a href="http://localhost:8080/productos">
-        <input type="button" class="btn btn-outline-secondary" id="btnEjs" value="Productos ejs" >
-    </a>
-    <a href="http://localhost:8080/productos">
-      <input type="button" class="btn btn-outline-secondary" id="btnPug"value="Productos pug" > 
-    </a>-->
-    </form>  
-
-    <form  action="/test">
-        <div class="form-check">
-        <input class="form-check-input" type="radio" name="ejs" id="checkEjs">
-        <label class="form-check-label" for="checkEjs">
-          Ejs
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="hbs" id="checkHbs">
-        <label class="form-check-label" for="checkHbs">
-          Hbs
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="pug" id="checkPug">
-        <label class="form-check-label" for="checkPug">
-          pug
-        </label>
-      </div>
-      <button type="submit" class="btn btn-outline-info" >Ir a Productos</button>
-    </form>
   
-  </div>
-
+  <form class="w-50 text-center">
+    <a href="http://localhost:8080/productos">
+        <input type="button"  class="btn btn-outline-secondary "   value="TODOS LOS PRODCUTOS ">
+        
+    </a> 
+</form>
 
 </html>

@@ -1,3 +1,4 @@
+const res = require('express/lib/response');
 const fs = require('fs');
 const {
     lastId,
@@ -55,12 +56,11 @@ class ProductsController {
     storage = async (req, res) => {
 
         const allProducts = await readJson(this.FileName)
-
+        if(req.body.name.length>0 &&req.body.price.length>0 &&req.body.imgURL.length>0){
         const newProduct = {
             id: lastId(allProducts) + 1,
             name: req.body.name,
             price: req.body.price,
-           // thumbnail: req.file.filename,
             imgURL:req.body.imgURL
         }
         try {
@@ -68,15 +68,18 @@ class ProductsController {
             allProducts.push(newProduct)
             await writeJson(this.FileName, allProducts)
 
-            res.status(200).json({
-                data:allProducts,
-                status:200
-            })
+            res.redirect("http://localhost:8080/productos")
 
         } catch (error) {
             res.status(400).json({
                 error: 404,
                 msg: error
+            })
+
+        }}else{
+            res.status(400).json({
+                error: 404,
+                msg: "DEBE LLENAR TODOS LOS CAMPOS"
             })
 
         }
@@ -94,11 +97,9 @@ class ProductsController {
                     ...foundProduct,                 
                     name: req.body.name != undefined ? req.body.name : foundProduct.name,
                     price: req.body.price != undefined ? req.body.price : foundProduct.price,
-                   // thumbnail: req.file != undefined? req.file.filename :foundProduct.thumbnail,
                     imgUrl:req.body.imgUrl != undefined ? req.body.imgUrl : foundProduct.imgUrl,
                     
                 }
-               
                 const editIndex = allProducts.indexOf(foundProduct)
                 allProducts[editIndex] = editProduct
                 await writeJson(this.FileName, allProducts)
