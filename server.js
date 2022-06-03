@@ -4,6 +4,7 @@ const {Server:HttpServer}=require('http')
 const {Server: IOServer}=require('socket.io')
 
 const messages =[]
+const products=[]
 
 const app = express()
 const httpServer = new HttpServer(app)
@@ -34,10 +35,15 @@ app.get('/chat', (req, res) => {
 ioServer.on('connection',(socket)=>{
     
     socket.emit('messages',messages)
+    socket.emit('products',products)
     
     socket.on('new_message',(mensaje)=>{
         messages.push(mensaje)
         ioServer.sockets.emit('messages',messages)
+    })
+    socket.on('new_products',(producto)=>{
+        products.push(producto)
+        ioServer.sockets.emit('products',products)
     })
     
 });
