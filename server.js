@@ -1,84 +1,45 @@
-const express=require('express');
-const path = require('path');
-const app=express();
-const PORT = 8080;
+const express = require('express')
 const handlebars = require('express-handlebars');
+const {Server:HttpServer}=require('http')
+const {Server: IOServer}=require('socket.io')
 
+const messages =[]
 
+const app = express()
+const httpServer = new HttpServer(app)
+const ioServer = new IOServer(httpServer)
 
-
-const routersProducts = require('./routes/ProductRoute')
-const routersMain = require('./routes/MainRoute');
-const {readJson} = require('./controller/helpers');
-
-const plantilla= 'pug'
-
-
-express.static(path.resolve(__dirname, './public'))
-
+app.use(express.static('./public'))
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+app.engine(
+    "hbs",
+    handlebars.engine({
+    extname:'.hbs',
+    defaultLayout:'index.hbs',
+    layoutsDir:__dirname+'/views/layouts'
+    })
+
+)
+
+app.set('view engine','hbs');
+app.set('views','./views')
+
+app.get('/chat', (req, res) => {
+    res.render('main');
+  });
 
 
+ioServer.on('connection',(socket)=>{
+    
+    socket.emit('messages',messages)
+    
+    socket.on('new_message',(mensaje)=>{
+        messages.push(mensaje)
+        ioServer.sockets.emit('messages',messages)
+    })
+    
+});
 
-switch (plantilla) {
-    case "hbs":
-        //plantilla hbs
-        app.engine(
-        "hbs",
-        handlebars.engine({
-        extname:'.hbs',
-        defaultLayout:'index.hbs',
-        layoutsDir:__dirname+'/views/layouts'
-        })
-        )
-        
-        app.set('view engine','hbs');
-        app.set('views','./views')
-        
-        app.get('/productos',async (req,res)=>{
-            const productos=    await readJson('db')    
-            res.render('main',{productos})
-        })
-        break;
-    case "ejs":
-        //   ejs
-        app.set('view engine','ejs');
-        app.set('views','./views')
-
-        app.get('/productos',async (req,res)=>{
-        const productos=    await readJson('db')    
-        res.render('main',{productos})
-        })
-        break;
-    case "pug":
-        //pug
-        app.set('view engine','pug');
-        app.set('views','./views')
-
-        app.get('/productos',async (req,res)=>{
-        
-        const productos=    await readJson('db')    
-        res.render('main',{productos})
-        })
-        break;
-    default:
-        break;
-}
-
-
-
-
-
-app.use('/',routersMain)
-
-
-
-
-
-app.use('/api/productos',routersProducts)
-
-
-app.listen(PORT,()=>(console.log(`servidor corriendo en puerto ${PORT}`)))
-
+httpServer.listen(3000, ()=>console.log("servidor corriendo en puerto 3000"))

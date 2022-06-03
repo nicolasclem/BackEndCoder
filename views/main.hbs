@@ -1,41 +1,7 @@
-
-
-
-<h1 class="display-6 text-center">Todos lo Productos HBS</h1>
-<div>
-{{#if productos.length}}
-   
-<table class="table w-50 m-auto">
-  <thead>
-    <tr>
-      
-      <th scope="col">Nombre</th>
-      <th scope="col">Precio</th>
-      <th scope="col">imagen</th>
-    </tr>
-  </thead>
-   <tbody>
-     {{#each productos }}
-        <tr>
-            <td>{{name}}</td>
-            <td>$ {{price}}</td>
-            <td>
-                
-                <img src={{imgURL}} alt="...">
-            </td>
-        </tr>
-    {{/each}}
-</tbody>
-</table>
-{{else}}
-
- <p class="display-6 text-center">No se encuentran productos</p>
- {{/if}}
-
-</div>
-<form class="w-50 text-center">
-    <a href="http://localhost:8080">
-        <input type="button"  class="btn btn-outline-secondary" value="Crear Producto">
-    </a>
-</form>
-
+<h1 class="display-6 text-center">Chats HBS</h1>
+    <form onsubmit="return enviarMensaje()">
+        <input type="text" id="author" placeholder="Nombre"/>
+        <input type="text" id="text" placeholder="Escriba su mensaje"/>
+        <button type="submit" class="btn btn-outline-secondary">Enviar mensaje</button>
+    </form>  
+<div id="messages"></div>
