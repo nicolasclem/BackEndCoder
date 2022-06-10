@@ -10,11 +10,11 @@ app.use(express.urlencoded({extended: false}));
 
 
 const routesProducts = require('./src/routes/productsRoutes')
-//const routesCart = require('./src/routes/cartRoutes')
+const routesCart = require('./src/routes/cartRoutes')
 
 
 
 app.use('/api/productos',routesProducts)
-//app.use('/api/carrito',routesCart)
+app.use('/api/carrito',routesCart)
 
 app.listen(port, () => console.log(`listening on http://localhost:${port}`));

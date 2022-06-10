@@ -18,5 +18,15 @@
 		"thumbnail": "https://picsum.photos/200",
 		"price": 20,
 		"stock": 5
+	},
+	{
+		"id": 4,
+		"timestamp": "2022-06-09T20:11:04.142Z",
+		"name": "bautista Con user",
+		"description": "soy la descripcion 3",
+		"code": "codigo cualquiera111111",
+		"thumbnail": "https://picsum.photos/200",
+		"price": 20,
+		"stock": 5
 	}
 ]

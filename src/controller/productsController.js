@@ -10,21 +10,23 @@ class ProductsController {
         this.FileName = FileName;
 
     }
-    getAll = async (req,res) => {
+
+    getAll = async (req, res) => {
         const exists = fs.existsSync(`./${this.FileName}.json`)
         if (exists) {
             try {
                 const allProducts = await readJson(this.FileName)
-                if (allProducts.length >0){
-                res.status(200).json({
-                    data:allProducts,
-                    status:200
-               })}       else{
-                res.status(200).json({
-                    msg:"no se encuentran productos cargados",
-                    status:200
-               })
-               }
+                if (allProducts.length > 0) {
+                    res.status(200).json({
+                        data: allProducts,
+                        status: 200
+                    })
+                } else {
+                    res.status(200).json({
+                        msg: "no se encuentran productos cargados",
+                        status: 200
+                    })
+                }
             } catch (error) {
                 res.status(400).json({
                     error: 404,
@@ -36,15 +38,15 @@ class ProductsController {
         }
     }
 
-    getByID = async (req,res,id) => {
+    getByID = async (req, res, id) => {
         try {
 
             const allProducts = await readJson(this.FileName)
             const foundProduct = allProducts.find(elem => elem.id == id)
             if (foundProduct != undefined) {
                 res.status(200).json({
-                    data:foundProduct,
-                    status:200
+                    data: foundProduct,
+                    status: 200
                 })
             } else {
                 res.status(400).json({
@@ -63,14 +65,14 @@ class ProductsController {
 
         const newProduct = {
             id: lastId(allProducts) + 1,
-            timestamp:new Date(),
+            timestamp: new Date(),
             name: req.body.name,
-            description:req.body.description,
-            code:req.body.code,
+            description: req.body.description,
+            code: req.body.code,
             thumbnail: req.body.img,
             price: req.body.price,
-            stock:req.body.stock
-            
+            stock: req.body.stock
+
         }
         try {
 
@@ -78,8 +80,8 @@ class ProductsController {
             await writeJson(this.FileName, allProducts)
 
             res.status(200).json({
-                data:allProducts,
-                status:200
+                data: allProducts,
+                status: 200
             })
 
         } catch (error) {
@@ -100,26 +102,25 @@ class ProductsController {
             if (foundProduct != undefined) {
 
                 const editProduct = {
-                    ...foundProduct,                 
+                    ...foundProduct,
                     name: req.body.name != undefined ? req.body.name : foundProduct.name,
-                    thumbnail: req.body.img != undefined? req.body.img :foundProduct.thumbnail,
-                    description: req.body.description != undefined? req.body.description :foundProduct.description,
-                    code: req.body.code != undefined? req.body.code :foundProduct.code,
-                    stock: req.body.stock != undefined? req.body.stock :foundProduct.stock,
+                    thumbnail: req.body.img != undefined ? req.body.img : foundProduct.thumbnail,
+                    description: req.body.description != undefined ? req.body.description : foundProduct.description,
+                    code: req.body.code != undefined ? req.body.code : foundProduct.code,
+                    stock: req.body.stock != undefined ? req.body.stock : foundProduct.stock,
                     price: req.body.price != undefined ? req.body.price : foundProduct.price,
 
                 }
-               
+
                 const editIndex = allProducts.indexOf(foundProduct)
                 allProducts[editIndex] = editProduct
                 await writeJson(this.FileName, allProducts)
 
                 res.status(200).json({
-                    data:allProducts,
-                    status:200
+                    data: allProducts,
+                    status: 200
                 })
-            }
-            else{
+            } else {
                 res.status(400).json({
                     error: 404,
                     msg: "no se encuentra el producto"
@@ -128,7 +129,8 @@ class ProductsController {
         } catch (error) {
             res.status(400).json({
                 error: 404,
-                msg: "soy el catch " , error
+                msg: "soy el catch ",
+                error
             })
 
         }
@@ -142,8 +144,8 @@ class ProductsController {
             await writeJson(this.FileName, productsById)
 
             res.status(200).json({
-                data:productsById,
-                status:200
+                data: productsById,
+                status: 200
             })
         } else res.status(400).json({
             error: 404,
@@ -153,6 +155,6 @@ class ProductsController {
     }
 }
 
-const prueba = new ProductsController("db")
+const controladorProducto = new ProductsController("db")
 
-module.exports = prueba
+module.exports = controladorProducto
