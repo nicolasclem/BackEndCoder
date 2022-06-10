@@ -176,9 +176,11 @@ class CartController {
 
         const allCart = await readJson(this.FileName)
         const cartById = allCart.find(X => X.id == parseInt(id))
+        console.log(cartById.products.length)
         if (cartById) {
             const newCart = cartById.products.filter(x => x.id != idP)
-            if (newCart.length != cartById.length && newCart > 0) {
+            console.log(newCart.length);
+            if (newCart.length != cartById.products.length) {
                 cartById.products = newCart
                 await writeJson(this.FileName, allCart)
                 res.status(200).json({
