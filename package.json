@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon Server.js"
+    "start": "node dataBase/mysql/schema.js && node dataBase/sqlite3/schema.js && node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "knex": "^2.1.0",
     "mysql2": "^2.3.3",
     "socket.io": "^4.5.1",
-    "sqlite3": "^5.0.8"
+    "sqlite3": "^5.0.8",
+    "uuid": "^8.3.2"
   }
 }

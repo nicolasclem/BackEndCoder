@@ -1,14 +1,16 @@
-const {options} = require('./config');
-const knex = require('knex')(options);
+const {config} = require('./config');
+const knex = require('knex')(config);
+const { products } = require('./products');
 
 const createTableProducts = async () =>{
     try {
-        const existTableProducts = await knex.schema.hasTable('`products');
+        console.log('⚙ Configuring MYSQL');
+        const existTableProducts = await knex.schema.hasTable('products');
         if(existTableProducts){
             await knex.schema.dropTable('products');
         }
         await knex.schema.createTable('products',(table) =>{
-            table.increments('id');
+            table.string('id');
             table.string('name', 30);
             table.integer('price');
             table.string('url', 300);

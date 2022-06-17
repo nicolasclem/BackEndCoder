@@ -1,20 +1,20 @@
 const ProductoModel = require('../models/productModel');
-const product = new ProductoModel();
-const ChatModel = require('../models/chat.model');
+const Producto = new ProductoModel();
+const ChatModel = require('../models/chatModel');
 const Chat = new ChatModel();
 
 module.exports = (io) => {
   io.on('connection', (socket) => {
-    console.log('Client Connected 👩‍💻 -', socket.id);
+    console.log("socketIO" ,socket.id);
 
     const sendProducts = async () => {
-      const products = await product.getAll();
+      const products = await Producto.getAll();
       io.emit('server:sendProducts', products);
     };
     sendProducts();
 
     socket.on('client:newProduct', async (data) => {
-      await product.save(data);
+      await Producto.save(data);
       sendProducts();
     });
 

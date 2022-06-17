@@ -1,14 +1,11 @@
-const express = require('express')
+const express = require('express');
+const { urlencoded } = require('express');
+const { Server } = require('socket.io');
 const handlebars = require('express-handlebars');
-const {Server:HttpServer}=require('http')
-const {Server: IOServer}=require('socket.io')
-
-const messages =[]
-const products=[]
-
-const app = express()
-const httpServer = new HttpServer(app)
-const ioServer = new IOServer(httpServer)
+const path = require('path');
+const router = require('./routes/products');
+const Sockets = require('./socketio');
+const app = express();
 
 app.use(express.static('./public'))
 app.use(express.json());
@@ -31,21 +28,14 @@ app.get('/chat', (req, res) => {
     res.render('main');
   });
 
+app.set('port', process.env.PORT || 8080);
+app.use('/api', router);
 
-ioServer.on('connection',(socket)=>{
-    
-    socket.emit('messages',messages)
-    socket.emit('products',products)
-    
-    socket.on('new_message',(mensaje)=>{
-        messages.push(mensaje)
-        ioServer.sockets.emit('messages',messages)
-    })
-    socket.on('new_products',(producto)=>{
-        products.push(producto)
-        ioServer.sockets.emit('products',products)
-    })
-    
+  
+const server = app.listen(app.get('port'), () => {
+ console.log(`servidor corriendo en puerto 8080`)
 });
 
-httpServer.listen(3000, ()=>console.log("servidor corriendo en puerto 3000"))
+const io = new Server(server);
+
+Sockets(io);
