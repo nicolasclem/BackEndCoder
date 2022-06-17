@@ -86,3 +86,5 @@ const agregarProductos = (productos) => {
 
 socket.on('messages', (messages) => agregarMensajes(messages));
 socket.on('products', (products) => agregarProductos(products));
+
+

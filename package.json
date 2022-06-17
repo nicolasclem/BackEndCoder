@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dataBase/mysql/schema.js && node dataBase/sqlite3/schema.js && node server.js"
+    "start": "node Server.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,9 +14,8 @@
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
     "knex": "^2.1.0",
-    "mysql2": "^2.3.3",
+    "mysql": "^2.18.1",
     "socket.io": "^4.5.1",
-    "sqlite3": "^5.0.8",
-    "uuid": "^8.3.2"
+    "sqlite3": "^5.0.8"
   }
 }
