@@ -42,7 +42,7 @@ class Contenedor{
             const result = await this.knex(this.table).where({'id': numberId}).del();
 
             if (result) {
-                return 1;   //Se elimino correctamente
+                return 1;   
             }else{
                 return null;
             }
@@ -56,7 +56,7 @@ class Contenedor{
             const result = await this.knex(this.table).del();
 
             if (result) {
-                return 1;   //Se elimino correctamente
+                return 1;   
             }else{
                 return null;
             }

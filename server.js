@@ -8,8 +8,7 @@ const { defaultConfiguration } = require('express/lib/application');
 const { Server: HttpServer } = require('http');       
 const { Server: SocketServer } = require('socket.io');
 
-let producto = [];
-let messages = [];
+
 
 const app = express();
 app.use(express.static('public')); 
@@ -29,13 +28,7 @@ socketServer.on('connection', (socket) => {
         socket.emit('new_event', producto, messages);      
     }
     init();
-    /* const data = fs.readFileSync('./public/mensajes.txt');
-    messages = JSON.parse(data);
 
-    contenedor.getAll().then((result) => {
-        producto = result;
-        socket.emit('new_event', producto, messages);      
-    }); */
 
     socket.on('nuevo_prod', (obj) => {
 
