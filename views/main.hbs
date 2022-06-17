@@ -1,0 +1,59 @@
+<form onsubmit="return enviarProducto()" class=" container mx-auto my-4 w-25">
+    <div class="mb-3">
+      
+      <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" aria-describedby="emailHelp" >
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text">$</span>
+      <input type="text" class="form-control" placeholder="Precio" name="price" id="price" aria-label="Amount (to the nearest dollar)">
+      <span class="input-group-text">.00</span>
+    </div>
+    <div class="mb-3">
+      
+      <input type="text" class="form-control" id="imgURL" name="imgURL" placeholder="img x URL" aria-describedby="emailHelp">
+    </div>
+    <button type="submit" class="btn btn-primary">Crear Producto</button>
+  </form>
+  
+  <form class="w-50 text-center">
+
+</form>
+
+
+<h1 class="display-6 text-center my-4">productos en HBS</h1>
+<div>
+
+   
+<table class="table w-50 m-auto">
+  <thead>
+    <tr>
+      
+      <th scope="col">Nombre</th>
+      <th scope="col">Precio</th>
+      <th scope="col">imagen</th>
+    </tr>
+  </thead>
+   <tbody id="tableProducts">
+    
+    </tbody>
+</table>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="mx-2 my-4">
+<h1 class="display-6 text-center">Chats HBS</h1>
+    <form onsubmit="return enviarMensaje()">
+        <input type="email" id="author" placeholder="Email"/>
+        <input type="text" id="text" placeholder="Escriba su mensaje"/>
+        <button type="submit" class="btn btn-outline-secondary">Enviar mensaje</button>
+    </form>  
+<div id="messages"></div>
+</div>
