@@ -1,0 +1,23 @@
+  {{#if producto}}
+  <table class="table">
+      <thead class="table-dark">
+          <th>Title</th>
+          <th>Price</th>
+          <th>Url</th>
+      </thead>
+      <tbody>
+          {{#each producto }}
+          <tr class="table-primary">
+              <td>{{./title }}</td>
+              <td>{{./price }}</td>
+              <td><img style="width: 80px; height:80px" src={{./thumbnail }} alt="..."></td>
+          </tr>
+          {{/each }}
+      </tbody>
+  </table>
+  {{else }}
+  <p>No hay productos</p><br>
+  {{/if }}
+  <hr>
+
+  

@@ -1,20 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-  <title>Aplicacion Chat</title>
- 
- 
-</head>
-<body class="text-center my-5">
-  <form class="w-50 text-center">
-    <a href="./chat">
-        <input type="button"  class="btn btn-outline-secondary" value="IR A DESAFIO 6">
-    </a>
-</form>
-</body>
+<html>
+  <head>
+    <title>Productos</title>
+    <script src="/socket.io/socket.io.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="main.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+    
+    <form onsubmit="return agregarProducto()"  class=" container mx-auto my-4 w-25">
+      <div class="mb-3">
+      
+        <input type="text" class="form-control" id="title" name="title" placeholder="Nombre" aria-describedby="emailHelp" >
+      </div>
+      
+      <div class="input-group mb-3">
+        <span class="input-group-text">$</span>
+        <input type="text" class="form-control" placeholder="Precio" name="price" id="price" aria-label="Amount (to the nearest dollar)">
+        <span class="input-group-text">.00</span>
+      </div>
+      <div class="mb-3">
+      
+        <input type="text" class="form-control" id="thumbnail" name="thumbnail" placeholder="img x URL" aria-describedby="emailHelp">
+      </div>
+     
+      
+      <button type="submit" class="btn btn-primary">Crear Producto</button>
+    </form>
 
+    <div id="tableProdcutsHBS"  class=" container mx-auto my-4 w-50"></div>
+    
+    
+
+
+    
+      <div class="container">
+
+        <div class="row">
+          <form onsubmit="return enviarMensaje()" class="col">
+              <input type="email" id="author" placeholder="Email"/>
+              <input type="text" id="text" placeholder="Escriba su mensaje"/>
+              <button type="submit" class="btn btn-outline-secondary">Enviar mensaje</button>
+          </form>  
+      
+       
+          <div id="messagesHBS" class="col"></div>
+        </div>
+    </div>
+
+
+
+
+
+  </body>
 </html>
-

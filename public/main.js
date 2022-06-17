@@ -1,90 +1,55 @@
-const socket = io()
+const socket = io(); 
+
+const agregarProducto = () => {
+  const title = document.getElementById("title").value; 
+  const price = document.getElementById("price").value; 
+  const thumbnail = document.getElementById("thumbnail").value; 
+  const producto = { title, price, thumbnail };                   
+  socket.emit('nuevo_prod', producto);                
+  document.getElementById("title").value="";
+  document.getElementById("price").value="";
+  document.getElementById("thumbnail").value="";
+  return false;                                       
+}
 
 const enviarMensaje = () => {
-    const author = document.getElementById("author").value;
-    const text = document.getElementById("text").value;
-    const time = new Date()
-    
+  const author = document.getElementById("author").value;
+  const text = document.getElementById("text").value; 
+  const fecha = new Date();
+  const objFecha = {
+      dia: fecha.getDate(),
+      mes: fecha.getMonth() + 1,
+      anio: fecha.getFullYear(),
+      hs: fecha.getHours(),
+      min: fecha.getMinutes()
+  }
+const date = `[${objFecha.dia}/${objFecha.mes}/${objFecha.anio} ${objFecha.hs}:${objFecha.min}]`;  
+const mensaje = { author, date , text};                   
 
-    const mensaje = {
-        author,
-        text,
-        time
-       
-    };
-    socket.emit('new_message', mensaje);
-    return false;
+  socket.emit('new_message', mensaje);                
+  document.getElementById("author").value="";
+  document.getElementById("text").value="";
+  return false;                                       
 }
 
+const renderPlantilla = (producto, mensaje) => {
+  
+  fetch('/templateTable.hbs')
+  .then((res) => res.text())
+  .then((data) => {
+  const template = Handlebars.compile(data);
+  const html = template({producto: producto, title: title, price: price, thumbnail: thumbnail});
+  document.getElementById('tableProdcutsHBS').innerHTML = html;    
+  })
 
-const enviarProducto = () => {
-    const name = document.getElementById("name").value;
-    const price = document.getElementById("price").value;
-    const imgURL = document.getElementById("imgURL").value;
+  fetch('/templateMensajes.hbs')
+  .then((res) => res.text())
+  .then((data) => {
+  const templateChat = Handlebars.compile(data);
+  const htmlChat = templateChat({ mensaje: mensaje});
+  document.getElementById('messagesHBS').innerHTML = htmlChat;
+  })
 
-    const producto = {
-        name,
-        price,
-        imgURL
-       
-    };
-
-    socket.emit('new_products', producto);
-    return false;
 }
 
-
-const crearEtiquetasMensaje = (mensaje) => {
-    const {
-        author,
-        text,
-        time
-      
-    } = mensaje;
-    return `
-    
-    <div>
-        <strong style="color:blue">${author}  </strong>
-        <sm style="color:brown">${time}  :  </sm>
-        <em style="color:green">${text}    </em>
-    </div>
-    `;
-}
-
-const crearEtiquetaProducto = (producto) => {
-    const {
-        name,
-        price,
-        imgURL
-      
-    } = producto;
-    console.log(producto);
-    return `
-    
-    <tr>
-    <td>${name}</td>
-    <td>${price}</td>
-    <td>
-        
-        <img src=${imgURL} alt="...">
-    </td>
-    </tr>
-    `;
-}
-
-
-
-const agregarMensajes = (mensajes) => {
-    const mensajesFinal = mensajes.map(mensaje => crearEtiquetasMensaje(mensaje)).join(" ");
-    document.getElementById("messages").innerHTML = mensajesFinal;
-}
-
-const agregarProductos = (productos) => {
-    const productosFinal = productos.map(producto => crearEtiquetaProducto(producto)).join(" ");
-    document.getElementById("tableProducts").innerHTML = productosFinal;
-}
-
-socket.on('messages', (messages) => agregarMensajes(messages));
-socket.on('products', (products) => agregarProductos(products));
-
-
+socket.on('new_event', (productos, mensaje) => renderPlantilla(productos, mensaje));
