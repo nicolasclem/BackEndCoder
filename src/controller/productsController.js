@@ -1,11 +1,11 @@
 //FIREBASE
-// const daos = require('../daos/firebase/firebaseDaos');
-// const Product = new daos.productsDaos();
+const daos = require('../daos/firebase/firebaseDaos');
+const Product = new daos.productsDaos();
 
 
 //MONGO
-const daos = require('../daos/mongo/mongoDaos');
-const Product = new daos.productsDaos();
+// const daos = require('../daos/mongo/mongoDaos');
+// const Product = new daos.productsDaos();
 
 module.exports = {
   createProduct: async (req, res) => {

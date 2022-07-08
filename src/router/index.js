@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var products = require('./products');
-var cards = require('./carts');
+const products = require('./products');
+const cards = require('./carts');
 
 router.use('/products', products);
 router.use('/carts', cards);
