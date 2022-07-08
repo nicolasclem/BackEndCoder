@@ -1,160 +1,92 @@
-const fs = require('fs');
-const {
-    lastId,
-    readJson,
-    writeJson
-} = require('../helpers/helpersJSON')
+//FIREBASE
+// const daos = require('../daos/firebase/firebaseDaos');
+// const Product = new daos.productsDaos();
 
-class ProductsController {
-    constructor(FileName) {
-        this.FileName = FileName;
 
+//MONGO
+const daos = require('../daos/mongo/mongoDaos');
+const Product = new daos.productsDaos();
+
+module.exports = {
+  createProduct: async (req, res) => {
+    try {
+      const data = await Product.save(req.body);
+      res.status(200).send({
+        data,
+        status: 200
+      });
+    } catch (error) {
+      res.status(500).send({
+        status: 500,
+        messages: error.message,
+      });
     }
-
-    getAll = async (req, res) => {
-        const exists = fs.existsSync(`./${this.FileName}.json`)
-        if (exists) {
-            try {
-                const allProducts = await readJson(this.FileName)
-                if (allProducts.length > 0) {
-                    res.status(200).json({
-                        data: allProducts,
-                        status: 200
-                    })
-                } else {
-                    res.status(200).json({
-                        msg: "no se encuentran productos cargados",
-                        status: 200
-                    })
-                }
-            } catch (error) {
-                res.status(400).json({
-                    error: 404,
-                    msg: error
-                })
-            }
-
-
-        }
+  },
+  getAllProducts: async (req, res) => {
+    try {
+      const data = await Product.getAll();
+      res.status(200).send({
+        data,
+        status: 200
+      });
+    } catch (error) {
+      res.status(500).send({
+        status: 500,
+        messages: error.message,
+      });
     }
-
-    getByID = async (req, res, id) => {
-        try {
-
-            const allProducts = await readJson(this.FileName)
-            const foundProduct = allProducts.find(elem => elem.id == id)
-            if (foundProduct != undefined) {
-                res.status(200).json({
-                    data: foundProduct,
-                    status: 200
-                })
-            } else {
-                res.status(400).json({
-                    error: 404,
-                    msg: "no se encuentra el producto"
-                })
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
+  },
+  getProductById: async (req, res) => {
+    const idProduct = req.params.id;
+    try {
+      const data = await Product.getById(idProduct);
+      if (data) {
+        res.status(200).send({
+          data,
+          status: 200
+        });
+      } else {
+        res.status(404).send({
+          message: 'Producto no encontrado',
+          status: 404
+        });
+      }
+    } catch (error) {
+      res.status(500).send({
+        messages: error.message,
+        status: 500
+      });
     }
-    storage = async (req, res) => {
-
-        const allProducts = await readJson(this.FileName)
-
-        const newProduct = {
-            id: lastId(allProducts) + 1,
-            timestamp: new Date(),
-            name: req.body.name,
-            description: req.body.description,
-            code: req.body.code,
-            thumbnail: req.body.img,
-            price: req.body.price,
-            stock: req.body.stock
-
-        }
-        try {
-
-            allProducts.push(newProduct)
-            await writeJson(this.FileName, allProducts)
-
-            res.status(200).json({
-                data: allProducts,
-                status: 200
-            })
-
-        } catch (error) {
-            res.status(400).json({
-                error: 404,
-                msg: error
-            })
-
-        }
+  },
+  editProducts: async (req, res) => {
+    const idProduct = req.params.id;
+    const product = req.body;
+    try {
+      const data = await Product.updateById(idProduct, product);
+      res.status(200).send({
+        data,
+        status: 200
+      });
+    } catch (error) {
+      res.status(500).send({
+        messages: error.message,
+        status: 500
+      });
     }
-    update = async (req, res, id) => {
-
-        try {
-
-            const allProducts = await readJson(this.FileName)
-
-            const foundProduct = allProducts.find(elem => elem.id == id)
-            if (foundProduct != undefined) {
-
-                const editProduct = {
-                    ...foundProduct,
-                    name: req.body.name != undefined ? req.body.name : foundProduct.name,
-                    thumbnail: req.body.img != undefined ? req.body.img : foundProduct.thumbnail,
-                    description: req.body.description != undefined ? req.body.description : foundProduct.description,
-                    code: req.body.code != undefined ? req.body.code : foundProduct.code,
-                    stock: req.body.stock != undefined ? req.body.stock : foundProduct.stock,
-                    price: req.body.price != undefined ? req.body.price : foundProduct.price,
-
-                }
-
-                const editIndex = allProducts.indexOf(foundProduct)
-                allProducts[editIndex] = editProduct
-                await writeJson(this.FileName, allProducts)
-
-                res.status(200).json({
-                    data: allProducts,
-                    status: 200
-                })
-            } else {
-                res.status(400).json({
-                    error: 404,
-                    msg: "no se encuentra el producto"
-                })
-            }
-        } catch (error) {
-            res.status(400).json({
-                error: 404,
-                msg: "soy el catch ",
-                error
-            })
-
-        }
+  },
+  deleteProduct: async (req, res) => {
+    const idProduct = req.params.id;
+    try {
+      await Product.deleteById(idProduct);
+      res.status(200).send({
+        message: 'Producto Eliminado',
+        status: 200
+      });
+    } catch (error) {
+      res.status(500).send({
+        messages: error.message,
+        status: 500
+      });
     }
-
-    delete = async (req, res, id) => {
-
-        const allProducts = await readJson(this.FileName)
-        const productsById = allProducts.filter(X => X.id != id)
-        if (productsById.length != allProducts.length) {
-            await writeJson(this.FileName, productsById)
-
-            res.status(200).json({
-                data: productsById,
-                status: 200
-            })
-        } else res.status(400).json({
-            error: 404,
-            msg: "no se encuentra el producto"
-        })
-
-    }
-}
-
-const controladorProducto = new ProductsController("db")
-
-module.exports = controladorProducto
+  },
+};
