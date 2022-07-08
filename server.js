@@ -1,20 +1,22 @@
 const express = require('express');
-const path = require('path')
 const app = express();
-const port = process.env.PORT || 8080;
+const router = require('./src/router/index.js');
+const port = 8080;
 
-express.static(path.resolve(__dirname, './public'))
 
+app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+
+app.use('/api', router);
+
+app.use((req, res) => {
+        res.json({
+            error: '-2', 
+            description: `ruta ${req.originalUrl} metodo ${req.method} no implementada`
+        });
+    });
 
 
-const routesProducts = require('./src/routes/productsRoutes')
-const routesCart = require('./src/routes/cartRoutes')
-
-
-
-app.use('/api/productos',routesProducts)
-app.use('/api/carrito',routesCart)
-
-app.listen(port, () => console.log(`listening on http://localhost:${port}`));
+app.listen(8080, ()=>{
+    console.log(`Escuchando en el puerto ${port}`);
+});

@@ -44,3 +44,6 @@ router.delete('/:id', isUser, isAdmin, async (req, res) => {
 })
 
 module.exports = router
+
+
+
